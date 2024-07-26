@@ -14,6 +14,11 @@ var GREEN = '\033[32m';
 
 // Create the server
 http.createServer(function (request, response) {
+    if (path.normalize(decodeURI(request.url)) !== decodeURI(request.url)) {
+        response.statusCode = 403;
+        response.end();
+        return;
+    }
 
     // The requested URL, like http://localhost:8000/file.html => /file.html
     var uri = url.parse(request.url).pathname;
